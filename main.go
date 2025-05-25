@@ -54,11 +54,18 @@ func targetToString(t string) string {
 	return TargetMap[i]
 }
 
-func getOTA(version, target string) ([]byte, error) {
+func shouldInhibit(version string) bool {
+	return version == "21018"
+}
+
+func getOTA(version, target string, auto bool) ([]byte, error) {
 	if shouldNotAccept() {
 		return nil, errors.New("server busy")
 	}
 	version = normVer(version)
+	if shouldInhibit(version) && auto {
+		return nil, errors.New("version was inhibited")
+	}
 	latest := getLatestVersion()
 	if version == latest {
 		return nil, errors.New("already on latest")
@@ -86,7 +93,11 @@ func otaHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		t = targetToString(t)
-		data, err := getOTA(ver, t)
+		var isAuto bool
+		if strings.HasPrefix(path, "/vic/diff") {
+			isAuto = true
+		}
+		data, err := getOTA(ver, t, isAuto)
 		if err != nil {
 			http.Error(w, err.Error(), 404)
 			return
