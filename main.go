@@ -96,6 +96,18 @@ func otaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if strings.HasPrefix(path, "/vic/latest/") {
+		target := strings.Split(strings.Split(path, "/vic/latest/")[1], ".ota")[0]
+		latestOta, err := os.ReadFile(filepath.Join(FullPath, target, getLatestVersion()+".ota"))
+		if err != nil {
+			http.Error(w, "target not found", 404)
+			return
+		}
+		w.Header().Set("Content-Length", fmt.Sprintf("%d", len(latestOta)))
+		w.Write(latestOta)
+		return
+	}
+
 	http.NotFound(w, r)
 }
 
