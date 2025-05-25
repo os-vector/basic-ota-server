@@ -55,7 +55,7 @@ func targetToString(t string) string {
 }
 
 func shouldInhibit(version string) bool {
-	return version == "21018"
+	return version == "2.1.0.18"
 }
 
 func getOTA(version, target string, auto bool) ([]byte, error) {
@@ -63,6 +63,7 @@ func getOTA(version, target string, auto bool) ([]byte, error) {
 		return nil, errors.New("server busy")
 	}
 	version = normVer(version)
+	fmt.Println(version)
 	if shouldInhibit(version) && auto {
 		return nil, errors.New("version was inhibited")
 	}
