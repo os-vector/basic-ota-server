@@ -4,7 +4,7 @@
 
 - Your file structure should look like:
 
-(in / on your machine)
+(in the / directory, on your machine)
 
 ```
 /wire
