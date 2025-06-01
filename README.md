@@ -4,6 +4,8 @@
 
 - Your file structure should look like:
 
+(in the / directory, on your machine)
+
 ```
 /wire
   /otas
@@ -17,6 +19,6 @@
          ...
 ```
 
-- `latest` should be a file containing the version of your latest OTA - like `3.0.1.1`
-- before you start copying in a new OTA to dev and oskr, touch a file called /wire/otas/dnar. after your OTAs are done, delete it
-- just use `go build main.go` and run main in a daemon or whatever
+- `latest` should be a file only containing the version of your latest OTA - like `0.5.0.2`
+- Before you start copying in a new OTA to dev and oskr, touch a file called /wire/otas/dnar. After your OTAs are done copying, delete it.
+- To build: `go build main.go` in the root of the cloned repo
