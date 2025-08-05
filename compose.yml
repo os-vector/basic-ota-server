@@ -1,0 +1,7 @@
+services:
+  basic-ota-server:
+    build: .
+    ports: 
+      - 5901:5901
+    volumes:
+      - ./wire:/wire   
